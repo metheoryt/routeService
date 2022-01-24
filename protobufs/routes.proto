@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package routes;
+
+// model definitions
+message Point {
+    int32 id = 1;
+    string name = 2;
+    float latitude = 3;
+    float longitude = 4;
+}
+
+message WayPoint {
+    int32 id = 1;
+    Point point = 2;
+    int32 serial = 3;
+}
+
+message Route {
+    int32 id = 1;
+    string name = 2;
+    repeated WayPoint waypoints = 3;
+}
+
+// transport definitions
+message GetPointsRequest {
+    repeated int32 point_ids = 1;
+}
+
+message GetPointsResponse {
+    repeated Point points = 1;
+}
+
+
+message GetRoutesRequest {
+    repeated int32 route_ids = 1;
+    string username = 2;
+}
+
+message GetRoutesResponse {
+    repeated Route routes = 1;
+}
+
+message CalculateRouteRequest {
+    int32 a_point_id = 1;
+    int32 b_point_id = 2;
+}
+
+message RouteResponse {
+    Route route = 1;
+}
+
+message CreateRouteRequest {
+    repeated int32 point_ids = 1;
+    string route_name = 2;
+}
+
+// service definitions
+service Routes {
+    rpc GetPoints (GetPointsRequest) returns (GetPointsResponse);
+    rpc GetRoutes (GetRoutesRequest) returns (GetRoutesResponse);
+    rpc CalculateRoute (CalculateRouteRequest) returns (RouteResponse);
+    rpc CreateRoute (CreateRouteRequest) returns (RouteResponse);
+}

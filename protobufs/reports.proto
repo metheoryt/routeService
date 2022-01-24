@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package routes;
+
+import "google/protobuf/empty.proto";
+
+
+message UserRoutesLengths {
+    int32 user_id = 1;
+    int32 routes_count = 2;
+    float routes_total_length_meters = 3;
+}
+
+// message definitions
+message UserRoutesLengthReportResponse {
+    repeated UserRoutesLengths records = 1;
+}
+
+
+service Reports {
+    rpc GetUsersRoutesLengthReport(google.protobuf.Empty) returns (UserRoutesLengthReportResponse);
+}
